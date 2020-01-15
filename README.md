@@ -1,6 +1,6 @@
 # Convertisseur YouTube MP3
 
-Ce projet permet de télécharger des vidéos YouTube au format MP3. Vous pouvez l'utiliser depuis depuis [mon site](https://www.son.julien-giraud.fr/)
+Ce projet permet de télécharger des vidéos YouTube au format MP3. Vous pouvez l'utiliser depuis [mon site](https://www.son.julien-giraud.fr/)
 
 ## Utilisation
 
