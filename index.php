@@ -6,55 +6,51 @@ if (@$_POST['url'])
 else
     $url = "";
 
-// Traitement de l'URL
-if ($url != "") {
+// Si l'URL est valide
+if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
 
     // Chargement de la class pour récupérer le titre de la vidéo
     include_once 'YouTubeDownloader.class.php';
     $handler = new YouTubeDownloader();
+    
+    // Récupération de l'objet de l'URL
+    $downloader = $handler->getDownloader($url);
 
-    // Si l'URL est valide
-    if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
-        
-        // Récupération de l'objet de l'URL
-        $downloader = $handler->getDownloader($url);
+    // Si l'URL est bien celle d'une vidéo YouTube
+    if($downloader->hasVideo()){
 
-        // Si l'URL est bien celle d'une vidéo YouTube
-        if($downloader->hasVideo()){
+        // Récupération du titre
+        $videoTitle = $downloader->getVideoInfos()[0]['title'];
 
-            // Récupération du titre
-            $videoTitle = $downloader->getVideoInfos()[0]['title'];
+        // Formatage du nom de fichier
+        $fileName = str_replace(' ', '_', $videoTitle);
+        $fileName = mb_strtolower($fileName, 'UTF-8');
+        $fileName = preg_replace('/[^A-Za-z0-9.\_\-]/', '', basename($fileName));
 
-            // Formatage du nom de fichier
-            $fileName = str_replace(' ', '_', $videoTitle);
-            $fileName = mb_strtolower($fileName, 'UTF-8');
-            $fileName = preg_replace('/[^A-Za-z0-9.\_\-]/', '', basename($fileName));
+        // Si aucun fichier du dossier mp3 ne correspond à la vidéo
+        if (shell_exec("ls mp3/$fileName.mp3 | wc -l") == 0) {
 
-            // Si aucun fichier du dossier mp3 ne correspond à la vidéo
-            if (shell_exec("ls mp3/$fileName.mp3 | wc -l") == 0) {
+            // Création d'un dossier de travail unique
+            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+            $folderName = substr(str_shuffle($permitted_chars), 0, 16);
+            shell_exec("mkdir $folderName");
 
-                // Création d'un dossier de travail unique
-                $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-                $folderName = substr(str_shuffle($permitted_chars), 0, 16);
-                shell_exec("mkdir $folderName");
+            // Téléchargement et conversion de la vidéo
+            shell_exec("cd $folderName; ./../youtube-dl " . $downloader->getVideoUrl());
+            shell_exec("cd $folderName; mv *.mp4 $fileName.mp4");
+            shell_exec("./ffmpeg/ffmpeg -i $folderName/$fileName.mp4 mp3/$fileName.mp3 -q:a 2");
 
-                // Téléchargement et conversion de la vidéo
-                shell_exec("cd $folderName; ./../youtube-dl " . $downloader->getVideoUrl());
-                shell_exec("cd $folderName; mv *.mp4 $fileName.mp4");
-                shell_exec("./ffmpeg/ffmpeg -i $folderName/$fileName.mp4 mp3/$fileName.mp3 -q:a 2");
-
-                // Nettoyage du dossier de travail
-                shell_exec("rm -r $folderName");
-            }
-            
-            // Lancement du téléchargement
-            header("Cache-Control: public");
-            header("Content-Description: File Transfer");
-            header('Content-Disposition: attachment; filename="' . $videoTitle . '.mp3"');
-            header("Content-Type: audio/mpeg");
-            header("Content-Transfer-Encoding: binary");
-            readfile("mp3/$fileName.mp3");
+            // Nettoyage du dossier de travail
+            shell_exec("rm -r $folderName");
         }
+        
+        // Lancement du téléchargement
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $videoTitle . '.mp3"');
+        header("Content-Type: audio/mpeg");
+        header("Content-Transfer-Encoding: binary");
+        readfile("mp3/$fileName.mp3");
     }
 }
 
