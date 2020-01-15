@@ -1,0 +1,81 @@
+/* Variables globales */
+
+:root {
+    --global-color: #4a4a4a;
+
+    /* navbar */
+    --navbar-bg: white;
+    --navbar-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    --navbar-container-justify-content: space-between;
+    --navbar-container-margin-left: calc(10% - var(--navbar-brand-padding-x));
+    --navbar-container-margin-right: calc(10% - var(--navbar-brand-padding-x));
+    --navbar-height: 80px;
+    --navbar-items-padding-x: 0;
+    --navbar-items-padding-y: 0.5em;
+    --navbar-links-hover-decallage: 0.3em;
+    --navbar-links-transition: all 0.2s;
+    --navbar-transition: cubic-bezier(0.5, 0, 0.5, 1) 0.3s;
+}
+
+@media (min-width: 992px) {
+    /* Écran "xl" */
+    :root {
+        /* burger */
+        --burger-display: none;
+
+        /* navbar */
+        --navbar-angle-margin-left: 0.5em;
+        --navbar-brand-padding-x: 1em;
+        --navbar-brand-width: 100%;
+        --navbar-dropdown-items-border-radius: 6px;
+        --navbar-dropdown-items-margin-y: calc(var(--navbar-height) - 20px);
+        --navbar-dropdown-items-position: absolute;
+        --navbar-items-box-shadow: 0 8px 8px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+        --navbar-links-padding-x: 1em;
+    }
+}
+
+/* Écran "lg" */
+@media (max-width: 1199px) and (min-width: 992px) {
+    :root {
+    }
+}
+
+/* Écran "md" */
+@media (max-width: 991px) {
+    :root {
+        /* burger */
+        --burger-padding-x: 1em;
+        --burger-padding-y: 0;
+
+        /* navbar */
+        --navbar-angle-margin-left: auto;
+        --navbar-angle-margin-right: 0.6em;
+        --navbar-brand-padding-x: var(--burger-padding-x);
+        --navbar-brand-width: 100%;
+        --navbar-container-flex-wrap: wrap;
+        --navbar-container-margin-right: 1em;
+        --navbar-container-margin-y: 0;
+        --navbar-dropdown-items-margin-x: var(--burger-padding-x);
+        --navbar-dropdown-items-hover-margin-y: 1em;
+        --navbar-items-box-shadow: -12px 0px 8px -8px rgba(10,10,10,.1);
+        --navbar-items-flex-direction: column;
+        --navbar-items-margin-y: 1em;
+        --navbar-items-order: 1;
+        --navbar-items-width: 100%;
+        --navbar-links-padding-x: var(--burger-padding-x);
+        --navbar-overflow: hidden;
+    }
+}
+
+/* Écran "sm" */
+@media (max-width: 767px) {
+    :root {
+    }
+}
+
+/* Écran "xs" */
+@media (max-width: 575px) {
+    :root {
+    }
+}
