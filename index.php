@@ -35,6 +35,9 @@ if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
             $folderName = substr(str_shuffle($permitted_chars), 0, 16);
             shell_exec("mkdir $folderName");
 
+            // Mise à jour de youtube-dl
+            shell_exec("./youtube-dl -U");
+
             // Téléchargement et conversion de la vidéo
             shell_exec("cd $folderName; ./../youtube-dl " . $downloader->getVideoUrl());
             shell_exec("cd $folderName; mv *.mp4 $fileName.mp4");
@@ -96,6 +99,7 @@ if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
         <section>
             <div class="container">
                 <h1>Convertisseur YouTube MP3</h1>
+                <pre><?= $toto ?></pre>
             </div>
         </section>
 
@@ -132,7 +136,7 @@ if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
                     </a>
                 </div>
                 <div>
-                    <span class="" title="Dernière mise à jour : 15/01/2020">© Tous droits réservés - 2020</span>
+                    <span class="" title="Dernière mise à jour : 27/01/2020">© Tous droits réservés - 2019 / 2020</span>
                 </div>
             </div>
         </footer>
