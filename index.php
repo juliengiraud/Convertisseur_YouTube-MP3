@@ -99,7 +99,6 @@ if(!empty($url) && !filter_var($url, FILTER_VALIDATE_URL) === false){
         <section>
             <div class="container">
                 <h1>Convertisseur YouTube MP3</h1>
-                <pre><?= $toto ?></pre>
             </div>
         </section>
 
