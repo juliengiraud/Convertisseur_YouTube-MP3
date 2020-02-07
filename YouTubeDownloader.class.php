@@ -83,6 +83,10 @@ class YouTubeDownloader {
         }
     }
 
+    public function getVideoId() {
+        return $this->extractVideoId($this->video_url);
+    }
+
     /*
      * Get the downloader object if pattern matches else return false
      * @param string

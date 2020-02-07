@@ -13,6 +13,10 @@
     display: flex;
 }
 
+.m-0 {
+    margin: 0;
+}
+
 .mt-0 {
     margin-top: 0;
 }

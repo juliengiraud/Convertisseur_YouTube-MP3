@@ -7,3 +7,6 @@ RewriteRule ^.*$ https://www.%1%{REQUEST_URI} [L,NE,R=301]
 
 # Erreur 404
 ErrorDocument 404 /index.php
+
+# Bloquer le ls des dossiers
+Options -Indexes
